@@ -2,15 +2,10 @@ import 'dart:math';
 
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
-import 'package:flame/experimental.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 
-import '../level_selection/levels.dart';
-import '../player_progress/player_progress.dart';
-import 'components/obstacle.dart';
 import 'components/player.dart';
-import 'components/point.dart';
 import 'game_screen.dart';
 
 /// The world is where you place all the components that should live inside of
@@ -27,21 +22,21 @@ import 'game_screen.dart';
 ///  to.
 class CritterWorld extends World with TapCallbacks, HasGameReference {
   CritterWorld({
-    required this.level,
-    required this.playerProgress,
+    // required this.level,
+    // required this.playerProgress,
     Random? random,
   }) : _random = random ?? Random();
 
   /// The properties of the current level.
-  final GameLevel level;
+  // final GameLevel level;
 
   /// Used to see what the current progress of the player is and to update the
   /// progress if a level is finished.
-  final PlayerProgress playerProgress;
+  // final PlayerProgress playerProgress;
 
   /// The speed is used for determining how fast the background should pass by
   /// and how fast the enemies and obstacles should move.
-  late double speed = _calculateSpeed(level.number);
+  // late double speed = _calculateSpeed(level.number);
 
   /// In the [scoreNotifier] we keep track of what the current score is, and if
   /// other parts of the code is interested in when the score is updated they
@@ -72,58 +67,58 @@ class CritterWorld extends World with TapCallbacks, HasGameReference {
     // Dash in this case.
     player = Player(
       position: Vector2(-size.x / 3, groundLevel - 900),
-      playerIndex: 0,
+      playerIndex: 1,
       isMe: true,
       // addScore: addScore,
       // resetScore: resetScore,
     );
     add(player);
 
-    add(
-      SpawnComponent(
-        factory: (_) => Obstacle.random(
-          random: _random,
-          canSpawnTall: level.canSpawnTall,
-        ),
-        period: 5,
-        area: Rectangle.fromPoints(
-          Vector2(size.x / 2, groundLevel),
-          Vector2(size.x / 2, groundLevel),
-        ),
-        random: _random,
-      ),
-    );
+    // add(
+    //   SpawnComponent(
+    //     factory: (_) => Obstacle.random(
+    //       random: _random,
+    //       canSpawnTall: level.canSpawnTall,
+    //     ),
+    //     period: 5,
+    //     area: Rectangle.fromPoints(
+    //       Vector2(size.x / 2, groundLevel),
+    //       Vector2(size.x / 2, groundLevel),
+    //     ),
+    //     random: _random,
+    //   ),
+    // );
 
-    add(
-      SpawnComponent.periodRange(
-        factory: (_) => Point(),
-        minPeriod: 3.0,
-        maxPeriod: 5.0 + level.number,
-        area: Rectangle.fromPoints(
-          Vector2(size.x / 2, -size.y / 2 + Point.spriteSize.y),
-          Vector2(size.x / 2, groundLevel),
-        ),
-        random: _random,
-      ),
-    );
+    // add(
+    //   SpawnComponent.periodRange(
+    //     factory: (_) => Point(),
+    //     minPeriod: 3.0,
+    //     maxPeriod: 5.0 + level.number,
+    //     area: Rectangle.fromPoints(
+    //       Vector2(size.x / 2, -size.y / 2 + Point.spriteSize.y),
+    //       Vector2(size.x / 2, groundLevel),
+    //     ),
+    //     random: _random,
+    //   ),
+    // );
 
     // When the player takes a new point we check if the score is enough to
     // pass the level and if it is we calculate what time the level was passed
     // in, update the player's progress and open up a dialog that shows that
     // the player passed the level.
-    scoreNotifier.addListener(() {
-      if (scoreNotifier.value >= level.winScore) {
-        final levelTime = (DateTime.now().millisecondsSinceEpoch -
-                timeStarted.millisecondsSinceEpoch) /
-            1000;
-
-        levelCompletedIn = levelTime.round();
-
-        playerProgress.setLevelFinished(level.number, levelCompletedIn);
-        game.pauseEngine();
-        game.overlays.add(GameScreen.winDialogKey);
-      }
-    });
+    // scoreNotifier.addListener(() {
+    //   if (scoreNotifier.value >= level.winScore) {
+    //     final levelTime = (DateTime.now().millisecondsSinceEpoch -
+    //             timeStarted.millisecondsSinceEpoch) /
+    //         1000;
+    //
+    //     levelCompletedIn = levelTime.round();
+    //
+    //     playerProgress.setLevelFinished(level.number, levelCompletedIn);
+    //     game.pauseEngine();
+    //     game.overlays.add(GameScreen.winDialogKey);
+    //   }
+    // });
   }
 
   @override

@@ -3,7 +3,6 @@ import 'package:flame/components.dart';
 
 import '../../audio/sounds.dart';
 import '../critter_clash_flame.dart';
-import '../critter_world.dart';
 import '../effects/hurt_effect.dart';
 import 'obstacle.dart';
 import 'point.dart';
@@ -14,7 +13,7 @@ import 'projectile.dart';
 class Player extends SpriteAnimationGroupComponent<PlayerState>
     with
         CollisionCallbacks,
-        HasWorldReference<CritterWorld>,
+        // HasWorldReference<CritterWorld>,
         HasGameReference<CritterClashFlame> {
   Player({
     // required this.addScore,
@@ -132,15 +131,15 @@ class Player extends SpriteAnimationGroupComponent<PlayerState>
     // }
 
     // If we want to add walls handle them here... (aka, don't let us run through them)
-    final belowGround = position.y + size.y / 2 > world.groundLevel;
+    // final belowGround = position.y + size.y / 2 > world.groundLevel;
     // If the player's new position would overshoot the ground level after
     // updating its position we need to move the player up to the ground level
     // again.
-    if (belowGround) {
-      position.y = world.groundLevel - size.y / 2;
-      // _gravityVelocity = 0;
-      current = PlayerState.running;
-    }
+    // if (belowGround) {
+    //   position.y = world.groundLevel - size.y / 2;
+    // _gravityVelocity = 0;
+    // current = PlayerState.running;
+    // }
 
     // _lastPosition.setFrom(position);
   }
