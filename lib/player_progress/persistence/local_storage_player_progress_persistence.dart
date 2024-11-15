@@ -1,6 +1,12 @@
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'player_progress_persistence.dart';
+
+final pLocalStoragePlayerProgress =
+    Provider.autoDispose<LocalStoragePlayerProgressPersistence>((ref) {
+  return LocalStoragePlayerProgressPersistence();
+});
 
 /// An implementation of [PlayerProgressPersistence] that uses
 /// `package:shared_preferences`.

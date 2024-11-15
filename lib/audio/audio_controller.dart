@@ -5,12 +5,17 @@ import 'dart:math';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:logging/logging.dart';
 
 import '../app_lifecycle/app_lifecycle.dart';
 import '../settings/settings.dart';
 import 'songs.dart';
 import 'sounds.dart';
+
+final pAudioController = Provider.autoDispose<AudioController>((ref) {
+  return AudioController();
+});
 
 /// Allows playing music and sound. A facade to `package:audioplayers`.
 class AudioController {

@@ -3,10 +3,15 @@
 // BSD-style license that can be found in the LICENSE file.
 
 import 'package:flutter/foundation.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:logging/logging.dart';
 
 import 'persistence/local_storage_settings_persistence.dart';
 import 'persistence/settings_persistence.dart';
+
+final pSettingsController = Provider.autoDispose<SettingsController>((ref) {
+  return SettingsController();
+});
 
 /// An class that holds settings like [playerName] or [musicOn],
 /// and saves them to an injected persistence store.

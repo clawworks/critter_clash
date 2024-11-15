@@ -1,4 +1,10 @@
 import 'package:flame/palette.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+/// Provides the Color [Palette] for the app
+final pPalette = Provider.autoDispose<Palette>((ref) {
+  return Palette();
+});
 
 /// A palette of colors to be used in the game.
 ///
