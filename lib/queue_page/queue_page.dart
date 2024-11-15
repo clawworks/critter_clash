@@ -92,6 +92,13 @@ class QueuePage extends ConsumerWidget {
           const SizedBox(height: 30),
           WobblyButton(
             onPressed: () {
+              GoRouter.of(context).go('/play/session/1');
+            },
+            child: const Text('Play'),
+          ),
+          const SizedBox(height: 30),
+          WobblyButton(
+            onPressed: () {
               GoRouter.of(context).go('/');
             },
             child: const Text('Back'),
