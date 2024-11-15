@@ -47,6 +47,14 @@ final pGoRouter = Provider<GoRouter>((ref) {
             ],
           ),
           GoRoute(
+            path: 'queue',
+            pageBuilder: (context, state) => buildPageTransition<void>(
+              key: const ValueKey('queue'),
+              color: ref.watch(pPalette).backgroundLevelSelection.color,
+              child: const QueuePage(),
+            ),
+          ),
+          GoRoute(
             path: 'settings',
             builder: (context, state) => const SettingsScreen(
               key: Key('settings'),
