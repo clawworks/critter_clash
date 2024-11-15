@@ -27,30 +27,7 @@ class GameScreen extends ConsumerWidget {
     return Scaffold(
       body: GameWidget<CritterClashFlame>(
         key: const Key('play session'),
-        game: ref.watch(pGame(
-          (playerWon) async {
-            playerWon
-                ? print("✅ Player Won Game!! ")
-                : print("🟥 Player Lost Game!");
-            await showDialog(
-              barrierDismissible: false,
-              context: context,
-              builder: ((context) {
-                return AlertDialog(
-                  title: Text(playerWon ? 'You Won!' : 'You Lost...'),
-                  actions: [
-                    TextButton(
-                      onPressed: () {
-                        GoRouter.of(context).push('/lobby');
-                      },
-                      child: const Text('Back to Lobby'),
-                    ),
-                  ],
-                );
-              }),
-            );
-          },
-        )),
+        game: ref.watch(pGame),
         overlayBuilderMap: {
           backButtonKey: (BuildContext context, CritterClashFlame game) {
             return Positioned(

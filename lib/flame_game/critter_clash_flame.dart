@@ -13,13 +13,14 @@ import 'components/player.dart';
 import 'components/projectile.dart';
 import 'critter_world.dart';
 
-final pGame = Provider.autoDispose
-    .family<CritterClashFlame, void Function(bool)>((ref, onGameOver) {
+final pGame = Provider.autoDispose<CritterClashFlame>((ref) {
   return CritterClashFlame(
     ref: ref,
     // playerProgress: ref.watch(pPlayerProgress),
     audioController: ref.watch(pAudioController),
-    onGameOver: onGameOver,
+    onGameOver: (playerWon) async {
+      playerWon ? print("✅ Player Won Game!! ") : print("🟥 Player Lost Game!");
+    },
     onGameStateUpdate: (position, health) async {
       // TODO talk to database...
     },
@@ -174,32 +175,50 @@ class CritterClashFlame extends FlameGame
     final isKeyDown = event is KeyDownEvent;
     final isKeyUp = event is KeyUpEvent;
     print('Keys pressed: $keysPressed');
-    if (isKeyDown) {
-      if (keysPressed.contains(LogicalKeyboardKey.arrowUp)) {
-        _moveUp = isKeyDown;
+
+    // Arrow up key
+    if (event.logicalKey == LogicalKeyboardKey.arrowUp ||
+        event.logicalKey == LogicalKeyboardKey.keyW) {
+      if (isKeyDown) {
+        _moveUp = true;
       }
-      if (keysPressed.contains(LogicalKeyboardKey.arrowDown)) {
-        _moveDown = isKeyDown;
-      }
-      if (keysPressed.contains(LogicalKeyboardKey.arrowLeft)) {
-        _moveLeft = isKeyDown;
-      }
-      if (keysPressed.contains(LogicalKeyboardKey.arrowRight)) {
-        _moveRight = isKeyDown;
+      if (isKeyUp) {
+        _moveUp = false;
       }
       return KeyEventResult.handled;
     }
-    if (isKeyUp) {
-      if (keysPressed.contains(LogicalKeyboardKey.arrowUp)) {
-        _moveUp = false;
+
+    // Arrow down key
+    if (event.logicalKey == LogicalKeyboardKey.arrowDown ||
+        event.logicalKey == LogicalKeyboardKey.keyS) {
+      if (isKeyDown) {
+        _moveDown = true;
       }
-      if (keysPressed.contains(LogicalKeyboardKey.arrowDown)) {
+      if (isKeyUp) {
         _moveDown = false;
       }
-      if (keysPressed.contains(LogicalKeyboardKey.arrowLeft)) {
+      return KeyEventResult.handled;
+    }
+
+    // Arrow left key
+    if (event.logicalKey == LogicalKeyboardKey.arrowLeft ||
+        event.logicalKey == LogicalKeyboardKey.keyA) {
+      if (isKeyDown) {
+        _moveLeft = true;
+      }
+      if (isKeyUp) {
         _moveLeft = false;
       }
-      if (keysPressed.contains(LogicalKeyboardKey.arrowRight)) {
+      return KeyEventResult.handled;
+    }
+
+    // Arrow right key
+    if (event.logicalKey == LogicalKeyboardKey.arrowRight ||
+        event.logicalKey == LogicalKeyboardKey.keyD) {
+      if (isKeyDown) {
+        _moveRight = true;
+      }
+      if (isKeyUp) {
         _moveRight = false;
       }
       return KeyEventResult.handled;
@@ -210,9 +229,9 @@ class CritterClashFlame extends FlameGame
   @override
   void update(double dt) {
     super.update(dt);
-    if (isGameOver) {
-      return;
-    }
+    // if (isGameOver) {
+    //   return;
+    // }
     for (final child in children) {
       if (child is Projectile && child.hasBeenHit && !child.isMine) {
         _playerHealthPoint = _playerHealthPoint - child.damage;
@@ -225,17 +244,19 @@ class CritterClashFlame extends FlameGame
       endGame(false); // TODO ends game for just two players...
     }
 
+    print('On Game Update...');
+
     if (_moveUp) {
-      _player.move(Vector2(0, 40 * dt));
+      _player.move(Vector2(0, -100 * dt));
     }
     if (_moveDown) {
-      _player.move(Vector2(0, -40 * dt));
+      _player.move(Vector2(0, 100 * dt));
     }
     if (_moveLeft) {
-      _player.move(Vector2(40 * dt, 0));
+      _player.move(Vector2(-100 * dt, 0));
     }
     if (_moveRight) {
-      _player.move(Vector2(-40 * dt, 0));
+      _player.move(Vector2(100 * dt, 0));
     }
   }
 
@@ -287,5 +308,9 @@ class CritterClashFlame extends FlameGame
   void endGame(bool playerWon) {
     isGameOver = true;
     onGameOver(playerWon);
+  }
+
+  void startGame() {
+    isGameOver = false;
   }
 }

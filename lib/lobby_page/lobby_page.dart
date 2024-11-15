@@ -1,3 +1,4 @@
+import 'package:endless_runner/flame_game/critter_clash_flame.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -92,6 +93,7 @@ class LobbyPage extends ConsumerWidget {
           const SizedBox(height: 30),
           WobblyButton(
             onPressed: () {
+              ref.read(pGame).startGame();
               GoRouter.of(context).go('/play/session/1');
             },
             child: const Text('Play'),
