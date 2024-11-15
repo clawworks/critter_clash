@@ -19,14 +19,14 @@ import 'game_screen.dart';
 /// but in this game all components that go outside of the size of the viewport
 /// are removed, since the player can't interact with those anymore.
 ///
-/// The [EndlessWorld] has two mixins added to it:
+/// The [CritterWorld] has two mixins added to it:
 ///  - The [TapCallbacks] that makes it possible to react to taps (or mouse
 ///  clicks) on the world.
 ///  - The [HasGameReference] that gives the world access to a variable called
 ///  `game`, which is a reference to the game class that the world is attached
 ///  to.
-class EndlessWorld extends World with TapCallbacks, HasGameReference {
-  EndlessWorld({
+class CritterWorld extends World with TapCallbacks, HasGameReference {
+  CritterWorld({
     required this.level,
     required this.playerProgress,
     Random? random,
@@ -72,8 +72,10 @@ class EndlessWorld extends World with TapCallbacks, HasGameReference {
     // Dash in this case.
     player = Player(
       position: Vector2(-size.x / 3, groundLevel - 900),
-      addScore: addScore,
-      resetScore: resetScore,
+      playerIndex: 0,
+      isMe: true,
+      // addScore: addScore,
+      // resetScore: resetScore,
     );
     add(player);
 
@@ -158,7 +160,7 @@ class EndlessWorld extends World with TapCallbacks, HasGameReference {
     // the air. This makes it possible to later implement double jumping inside
     // of the `player` class if one would want to.
     if (towards.y.isNegative) {
-      player.jump(towards);
+      // player.jump(towards); // TODO throw the projectile...?
     }
   }
 

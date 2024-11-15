@@ -4,11 +4,12 @@ import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/extensions.dart';
 
-import '../endless_world.dart';
+import '../critter_world.dart';
 
 /// The [Obstacle] component can represent three different types of obstacles
 /// that the player can run into.
-class Obstacle extends SpriteComponent with HasWorldReference<EndlessWorld> {
+class Obstacle extends SpriteComponent with HasWorldReference<CritterWorld> {
+// class Obstacle extends SpriteComponent with HasWorldReference<EndlessWorld> {
   Obstacle.small({super.position})
       : _srcSize = Vector2.all(16),
         _srcPosition = Vector2.all(32),

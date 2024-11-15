@@ -15,14 +15,14 @@ class GameWinDialog extends ConsumerWidget {
   const GameWinDialog({
     super.key,
     required this.level,
-    required this.levelCompletedIn,
+    // required this.levelCompletedIn,
   });
 
   /// The properties of the level that was just finished.
   final GameLevel level;
 
   /// How many seconds that the level was completed in.
-  final int levelCompletedIn;
+  // final int levelCompletedIn;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -42,7 +42,7 @@ class GameWinDialog extends ConsumerWidget {
             ),
             const SizedBox(height: 16),
             Text(
-              'You completed level ${level.number} in $levelCompletedIn seconds.',
+              'You completed level ${level.number} in 0 seconds.',
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 16),
