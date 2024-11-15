@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../style/palette.dart';
 import '../../style/wobbly_button.dart';
 
-class QueuePage extends StatelessWidget {
+class QueuePage extends ConsumerWidget {
   const QueuePage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final palette = context.watch<Palette>();
+  Widget build(BuildContext context, WidgetRef ref) {
+    final palette = ref.watch(pPalette);
     // final playerProgress = context.watch<PlayerProgress>();
     // final levelTextStyle =
     //     Theme.of(context).textTheme.bodyMedium?.copyWith(height: 1.4);
