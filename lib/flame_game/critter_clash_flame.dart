@@ -140,10 +140,10 @@ class CritterClashFlame extends FlameGame
     // });
 
     // From Supabase tutorial
-    final playerImage = await images.load('player.png');
+    // final playerImage = await images.load('player.png');
     _player = Player(isMe: true, playerIndex: 0); // TODO pass in Player Index!
-    final spriteSize = Vector2.all(Player.radius * 2);
-    _player.add(SpriteComponent(sprite: Sprite(playerImage), size: spriteSize));
+    // final spriteSize = Vector2.all(Player.radius * 2);
+    // _player.add(SpriteComponent(sprite: Sprite(playerImage), size: spriteSize));
     add(_player);
 
     // final opponentImage = await images.load('opponent.png');
