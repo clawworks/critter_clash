@@ -1,4 +1,4 @@
-# Endless Runner Template
+# Critter Clash
 
 This is a starter Flutter and Flame project with an endless runner game built
 in Flutter & Flame, it includes the following features:
