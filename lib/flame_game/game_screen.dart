@@ -1,4 +1,3 @@
-import 'package:endless_runner/player_progress/player_progress.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -25,13 +24,11 @@ class GameScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final audioController = ref.read(pAudioController);
     return Scaffold(
       body: GameWidget<CritterClashFlame>(
         key: const Key('play session'),
-        game: CritterClashFlame(
-          playerProgress: ref.read(pPlayerProgress),
-          onGameOver: (playerWon) async {
+        game: ref.watch(pGame(
+          (playerWon) async {
             playerWon
                 ? print("✅ Player Won Game!! ")
                 : print("🟥 Player Lost Game!");
@@ -53,11 +50,7 @@ class GameScreen extends ConsumerWidget {
               }),
             );
           },
-          onGameStateUpdate: (position, health) async {
-            // TODO talk to database...
-          },
-          audioController: audioController,
-        ),
+        )),
         overlayBuilderMap: {
           backButtonKey: (BuildContext context, CritterClashFlame game) {
             return Positioned(

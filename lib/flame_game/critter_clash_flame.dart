@@ -1,3 +1,4 @@
+import 'package:endless_runner/style/palette.dart';
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
@@ -5,12 +6,25 @@ import 'package:flame/image_composition.dart' as flame_image;
 import 'package:flame/input.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../audio/audio_controller.dart';
-import '../player_progress/player_progress.dart';
 import 'components/player.dart';
 import 'components/projectile.dart';
 import 'critter_world.dart';
+
+final pGame = Provider.autoDispose
+    .family<CritterClashFlame, void Function(bool)>((ref, onGameOver) {
+  return CritterClashFlame(
+    ref: ref,
+    // playerProgress: ref.watch(pPlayerProgress),
+    audioController: ref.watch(pAudioController),
+    onGameOver: onGameOver,
+    onGameStateUpdate: (position, health) async {
+      // TODO talk to database...
+    },
+  );
+});
 
 /// This is the base of the game which is added to the [GameWidget].
 ///
@@ -29,16 +43,18 @@ class CritterClashFlame extends FlameGame
     with PanDetector, HasCollisionDetection, KeyboardEvents {
   CritterClashFlame({
     // required this.level,
-    required PlayerProgress playerProgress,
+    required this.ref,
     required this.audioController,
     required this.onGameOver,
     required this.onGameStateUpdate,
   }) : super(
           world: CritterWorld(),
           // camera:
-          // CameraComponent.withFixedResolution(width: 1920, height: 1080),
+          //     CameraComponent.withFixedResolution(width: 1920, height: 1080),
           // camera: CameraComponent.withFixedResolution(width: 1600, height: 720),
         );
+
+  final Ref ref;
 
   static const int _initialHealthPoints = 100;
 
@@ -69,16 +85,17 @@ class CritterClashFlame extends FlameGame
   /// A helper for playing sound effects and background audio.
   final AudioController audioController;
 
+  @override
+  Color backgroundColor() {
+    return ref.watch(pPalette).backgroundPlaySession.color;
+    // return Colors
+    //     .transparent; // TODO this is because the background image is set, fix if not
+  }
+
   bool _moveUp = false;
   bool _moveDown = false;
   bool _moveLeft = false;
   bool _moveRight = false;
-
-  // @override
-  // Color backgroundColor() {
-  //   return Colors
-  //       .transparent; // TODO this is because the background image is set, fix if not
-  // }
 
   /// In the [onLoad] method you load different type of assets and set things
   /// that only needs to be set once when the level starts up.
@@ -140,6 +157,7 @@ class CritterClashFlame extends FlameGame
     await super.onLoad();
   }
 
+  // TODO remove pan, add joystick/arrows for movement
   @override
   void onPanUpdate(DragUpdateInfo info) {
     _player.move(info.delta.global);
