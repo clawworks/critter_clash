@@ -27,7 +27,7 @@ class CritterClashGame extends ConsumerWidget {
     final palette = ref.watch(pPalette);
     return AppLifecycleObserver(
       child: MaterialApp.router(
-        title: 'Endless Runner',
+        title: 'Critter Clash',
         theme: flutterNesTheme().copyWith(
           colorScheme: ColorScheme.fromSeed(
             seedColor: palette.seed.color,
