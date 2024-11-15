@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+
 import 'settings.dart';
 
 void showCustomNameDialog(BuildContext context) {
@@ -10,16 +11,16 @@ void showCustomNameDialog(BuildContext context) {
           CustomNameDialog(animation: animation));
 }
 
-class CustomNameDialog extends StatefulWidget {
+class CustomNameDialog extends ConsumerStatefulWidget {
   final Animation<double> animation;
 
   const CustomNameDialog({required this.animation, super.key});
 
   @override
-  State<CustomNameDialog> createState() => _CustomNameDialogState();
+  ConsumerState<CustomNameDialog> createState() => _CustomNameDialogState();
 }
 
-class _CustomNameDialogState extends State<CustomNameDialog> {
+class _CustomNameDialogState extends ConsumerState<CustomNameDialog> {
   final TextEditingController _controller = TextEditingController();
 
   @override
@@ -47,7 +48,7 @@ class _CustomNameDialogState extends State<CustomNameDialog> {
             textCapitalization: TextCapitalization.words,
             textInputAction: TextInputAction.done,
             onChanged: (value) {
-              context.read<SettingsController>().setPlayerName(value);
+              ref.read(pSettingsController).setPlayerName(value);
             },
             onSubmitted: (value) {
               // Player tapped 'Submit'/'Done' on their keyboard.
@@ -68,7 +69,7 @@ class _CustomNameDialogState extends State<CustomNameDialog> {
 
   @override
   void didChangeDependencies() {
-    _controller.text = context.read<SettingsController>().playerName.value;
+    _controller.text = ref.read(pSettingsController).playerName.value;
     super.didChangeDependencies();
   }
 

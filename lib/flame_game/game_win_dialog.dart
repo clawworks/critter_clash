@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nes_ui/nes_ui.dart';
-import 'package:provider/provider.dart';
 
 import '../level_selection/levels.dart';
 import '../style/palette.dart';
@@ -11,7 +11,7 @@ import '../style/palette.dart';
 /// It shows what time the level was completed in and if there are more levels
 /// it lets the user go to the next level, or otherwise back to the level
 /// selection screen.
-class GameWinDialog extends StatelessWidget {
+class GameWinDialog extends ConsumerWidget {
   const GameWinDialog({
     super.key,
     required this.level,
@@ -25,8 +25,8 @@ class GameWinDialog extends StatelessWidget {
   final int levelCompletedIn;
 
   @override
-  Widget build(BuildContext context) {
-    final palette = context.read<Palette>();
+  Widget build(BuildContext context, WidgetRef ref) {
+    final palette = ref.read(pPalette);
     return Center(
       child: NesContainer(
         width: 420,

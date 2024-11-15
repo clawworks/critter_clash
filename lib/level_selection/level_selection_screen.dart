@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nes_ui/nes_ui.dart';
-import 'package:provider/provider.dart';
 
 import '../audio/audio_controller.dart';
 import '../audio/sounds.dart';
@@ -11,13 +11,13 @@ import '../style/wobbly_button.dart';
 import 'instructions_dialog.dart';
 import 'levels.dart';
 
-class LevelSelectionScreen extends StatelessWidget {
+class LevelSelectionScreen extends ConsumerWidget {
   const LevelSelectionScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final palette = context.watch<Palette>();
-    final playerProgress = context.watch<PlayerProgress>();
+  Widget build(BuildContext context, WidgetRef ref) {
+    final palette = ref.watch(pPalette);
+    final playerProgress = ref.watch(pPlayerProgress);
     final levelTextStyle =
         Theme.of(context).textTheme.bodyMedium?.copyWith(height: 1.4);
 
@@ -60,7 +60,7 @@ class LevelSelectionScreen extends StatelessWidget {
                     ListTile(
                       enabled: playerProgress.levels.length >= level.number - 1,
                       onTap: () {
-                        final audioController = context.read<AudioController>();
+                        final audioController = ref.read(pAudioController);
                         audioController.playSfx(SfxType.buttonTap);
 
                         GoRouter.of(context)

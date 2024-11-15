@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../player_progress/player_progress.dart';
 import '../style/palette.dart';
@@ -8,15 +8,15 @@ import '../style/wobbly_button.dart';
 import 'custom_name_dialog.dart';
 import 'settings.dart';
 
-class SettingsScreen extends StatelessWidget {
+class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
 
   static const _gap = SizedBox(height: 60);
 
   @override
-  Widget build(BuildContext context) {
-    final settings = context.watch<SettingsController>();
-    final palette = context.watch<Palette>();
+  Widget build(BuildContext context, WidgetRef ref) {
+    final settings = ref.watch(pSettingsController);
+    final palette = ref.watch(pPalette);
 
     return Scaffold(
       backgroundColor: palette.backgroundSettings.color,
@@ -64,7 +64,7 @@ class SettingsScreen extends StatelessWidget {
                       'Reset progress',
                       const Icon(Icons.delete),
                       onSelected: () {
-                        context.read<PlayerProgress>().reset();
+                        ref.read(pPlayerProgress).reset();
 
                         final messenger = ScaffoldMessenger.of(context);
                         messenger.showSnackBar(
@@ -92,14 +92,14 @@ class SettingsScreen extends StatelessWidget {
   }
 }
 
-class _NameChangeLine extends StatelessWidget {
+class _NameChangeLine extends ConsumerWidget {
   final String title;
 
   const _NameChangeLine(this.title);
 
   @override
-  Widget build(BuildContext context) {
-    final settings = context.watch<SettingsController>();
+  Widget build(BuildContext context, WidgetRef ref) {
+    final settings = ref.watch(pSettingsController);
 
     return InkResponse(
       highlightShape: BoxShape.rectangle,
