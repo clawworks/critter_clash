@@ -1,3 +1,4 @@
+import 'package:endless_runner/player_progress/player_progress.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -29,6 +30,7 @@ class GameScreen extends ConsumerWidget {
       body: GameWidget<CritterClashFlame>(
         key: const Key('play session'),
         game: CritterClashFlame(
+          playerProgress: ref.read(pPlayerProgress),
           onGameOver: (playerWon) async {
             playerWon
                 ? print("✅ Player Won Game!! ")

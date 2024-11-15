@@ -5,6 +5,7 @@ import 'package:flame/image_composition.dart' as flame_image;
 import 'package:flutter/material.dart';
 
 import '../audio/audio_controller.dart';
+import '../player_progress/player_progress.dart';
 import 'components/player.dart';
 import 'components/projectile.dart';
 import 'critter_world.dart';
@@ -26,15 +27,15 @@ class CritterClashFlame extends FlameGame
     with PanDetector, HasCollisionDetection {
   CritterClashFlame({
     // required this.level,
-    // required PlayerProgress playerProgress,
+    required PlayerProgress playerProgress,
     required this.audioController,
     required this.onGameOver,
     required this.onGameStateUpdate,
   }) : super(
-          // world: EndlessWorld(level: level, playerProgress: playerProgress),
-          camera:
-              CameraComponent.withFixedResolution(width: 1920, height: 1080),
-          // camera: CameraComponent.withFixedResolution(width: 1600, height: 720),
+        // world: CritterWorld(),
+        // camera:
+        // CameraComponent.withFixedResolution(width: 1920, height: 1080),
+        // camera: CameraComponent.withFixedResolution(width: 1600, height: 720),
         );
 
   static const int _initialHealthPoints = 100;
@@ -66,11 +67,11 @@ class CritterClashFlame extends FlameGame
   /// A helper for playing sound effects and background audio.
   final AudioController audioController;
 
-  @override
-  Color backgroundColor() {
-    return Colors
-        .transparent; // TODO this is because the background image is set, fix if not
-  }
+  // @override
+  // Color backgroundColor() {
+  //   return Colors
+  //       .transparent; // TODO this is because the background image is set, fix if not
+  // }
 
   /// In the [onLoad] method you load different type of assets and set things
   /// that only needs to be set once when the level starts up.
@@ -140,24 +141,24 @@ class CritterClashFlame extends FlameGame
     super.onPanUpdate(info);
   }
 
-  @override
-  void update(double dt) {
-    super.update(dt);
-    if (isGameOver) {
-      return;
-    }
-    for (final child in children) {
-      if (child is Projectile && child.hasBeenHit && !child.isMine) {
-        _playerHealthPoint = _playerHealthPoint - child.damage;
-        // final mirroredPosition = _player.getMirroredPercentPosition();
-        onGameStateUpdate(_player.position, _playerHealthPoint);
-        // _player.updateHealth(_playerHealthPoint / _initialHealthPoints);
-      }
-    }
-    if (_playerHealthPoint <= 0) {
-      endGame(false); // TODO ends game for just two players...
-    }
-  }
+  // @override
+  // void update(double dt) {
+  //   super.update(dt);
+  //   if (isGameOver) {
+  //     return;
+  //   }
+  //   for (final child in children) {
+  //     if (child is Projectile && child.hasBeenHit && !child.isMine) {
+  //       _playerHealthPoint = _playerHealthPoint - child.damage;
+  //       // final mirroredPosition = _player.getMirroredPercentPosition();
+  //       onGameStateUpdate(_player.position, _playerHealthPoint);
+  //       // _player.updateHealth(_playerHealthPoint / _initialHealthPoints);
+  //     }
+  //   }
+  //   if (_playerHealthPoint <= 0) {
+  //     endGame(false); // TODO ends game for just two players...
+  //   }
+  // }
 
   void startNewGame() {
     isGameOver = false;

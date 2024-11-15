@@ -76,7 +76,7 @@ class Obstacle extends SpriteComponent with HasWorldReference<CritterWorld> {
     // last update ran. We need to multiply the speed by `dt` to make sure that
     // the speed of the obstacles are the same no matter the refresh rate/speed
     // of your device.
-    position.x -= world.speed * dt;
+    // position.x -= world.speed * dt;
 
     // When the component is no longer visible on the screen anymore, we
     // remove it.
@@ -84,9 +84,11 @@ class Obstacle extends SpriteComponent with HasWorldReference<CritterWorld> {
     // anchor) and the center of the world is in (0, 0), so when the components
     // position plus its size in X-axis is outside of minus half the world size
     // we know that it is no longer visible and it can be removed.
-    if (position.x + size.x < -world.size.x / 2) {
-      removeFromParent();
-    }
+    // if (position.x + size.x < -world.size.x / 2) {
+    //   removeFromParent();
+    // }
+
+    super.update(dt);
   }
 }
 
