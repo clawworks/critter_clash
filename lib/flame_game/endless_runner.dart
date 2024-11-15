@@ -1,4 +1,5 @@
 import 'package:flame/components.dart';
+import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 
@@ -21,8 +22,9 @@ import 'endless_world.dart';
 ///
 /// Note that both of the last are passed in to the super constructor, they
 /// could also be set inside of `onLoad` for example.
-class EndlessRunner extends FlameGame<EndlessWorld> with HasCollisionDetection {
-  EndlessRunner({
+class CritterClashFlame extends FlameGame<EndlessWorld>
+    with PanDetector, HasCollisionDetection {
+  CritterClashFlame({
     required this.level,
     required PlayerProgress playerProgress,
     required this.audioController,

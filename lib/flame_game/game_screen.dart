@@ -14,7 +14,7 @@ import 'game_win_dialog.dart';
 ///
 /// It mostly sets up the overlays (widgets shown on top of the Flame game) and
 /// the gets the [AudioController] from the context and passes it in to the
-/// [EndlessRunner] class so that it can play audio.
+/// [CritterClashFlame] class so that it can play audio.
 class GameScreen extends ConsumerWidget {
   const GameScreen({required this.level, super.key});
 
@@ -27,15 +27,15 @@ class GameScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final audioController = ref.read(pAudioController);
     return Scaffold(
-      body: GameWidget<EndlessRunner>(
+      body: GameWidget<CritterClashFlame>(
         key: const Key('play session'),
-        game: EndlessRunner(
+        game: CritterClashFlame(
           level: level,
           playerProgress: ref.read(pPlayerProgress),
           audioController: audioController,
         ),
         overlayBuilderMap: {
-          backButtonKey: (BuildContext context, EndlessRunner game) {
+          backButtonKey: (BuildContext context, CritterClashFlame game) {
             return Positioned(
               top: 20,
               right: 10,
@@ -46,7 +46,7 @@ class GameScreen extends ConsumerWidget {
               ),
             );
           },
-          winDialogKey: (BuildContext context, EndlessRunner game) {
+          winDialogKey: (BuildContext context, CritterClashFlame game) {
             return GameWinDialog(
               level: level,
               levelCompletedIn: game.world.levelCompletedIn,

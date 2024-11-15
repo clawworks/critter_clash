@@ -16,7 +16,7 @@ class Player extends SpriteAnimationGroupComponent<PlayerState>
     with
         CollisionCallbacks,
         HasWorldReference<EndlessWorld>,
-        HasGameReference<EndlessRunner> {
+        HasGameReference<CritterClashFlame> {
   Player({
     required this.addScore,
     required this.resetScore,
