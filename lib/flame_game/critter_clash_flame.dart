@@ -32,10 +32,10 @@ class CritterClashFlame extends FlameGame
     required this.onGameOver,
     required this.onGameStateUpdate,
   }) : super(
-        // world: CritterWorld(),
-        // camera:
-        // CameraComponent.withFixedResolution(width: 1920, height: 1080),
-        // camera: CameraComponent.withFixedResolution(width: 1600, height: 720),
+          world: CritterWorld(),
+          // camera:
+          //     CameraComponent.withFixedResolution(width: 1920, height: 1080),
+          // camera: CameraComponent.withFixedResolution(width: 1600, height: 720),
         );
 
   static const int _initialHealthPoints = 100;
@@ -133,6 +133,7 @@ class CritterClashFlame extends FlameGame
     await super.onLoad();
   }
 
+  // TODO remove pan, add joystick/arrows for movement
   @override
   void onPanUpdate(DragUpdateInfo info) {
     _player.move(info.delta.global);
