@@ -25,17 +25,17 @@ class MainMenuScreen extends ConsumerWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset(
-                'assets/images/banner.png',
-                filterQuality: FilterQuality.none,
-              ),
-              _gap,
+              // Image.asset(
+              //   'assets/images/banner.png',
+              //   filterQuality: FilterQuality.none,
+              // ),
+              // _gap,
               Transform.rotate(
                 angle: -0.1,
                 child: ConstrainedBox(
                   constraints: const BoxConstraints(maxWidth: 500),
                   child: const Text(
-                    'A Flutter game template.',
+                    'CLASH OF THE CRITTERS',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontFamily: 'Press Start 2P',
@@ -54,9 +54,9 @@ class MainMenuScreen extends ConsumerWidget {
             WobblyButton(
               onPressed: () {
                 audioController.playSfx(SfxType.buttonTap);
-                GoRouter.of(context).go('/play');
+                GoRouter.of(context).go('/queue');
               },
-              child: const Text('Play'),
+              child: const Text('Join Queue'),
             ),
             _gap,
             WobblyButton(
@@ -76,8 +76,6 @@ class MainMenuScreen extends ConsumerWidget {
                 },
               ),
             ),
-            _gap,
-            const Text('Built with Flame'),
           ],
         ),
       ),

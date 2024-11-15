@@ -6,6 +6,7 @@ import 'flame_game/game_screen.dart';
 import 'level_selection/level_selection_screen.dart';
 import 'level_selection/levels.dart';
 import 'main_menu/main_menu_screen.dart';
+import 'queue_page/queue_page.dart';
 import 'settings/settings_screen.dart';
 import 'style/page_transition.dart';
 import 'style/palette.dart';
