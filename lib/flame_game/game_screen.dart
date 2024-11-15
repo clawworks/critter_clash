@@ -42,7 +42,7 @@ class GameScreen extends ConsumerWidget {
                   actions: [
                     TextButton(
                       onPressed: () {
-                        GoRouter.of(context).push('/queue');
+                        GoRouter.of(context).push('/lobby');
                       },
                       child: const Text('Back to Lobby'),
                     ),

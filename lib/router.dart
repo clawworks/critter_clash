@@ -5,8 +5,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'flame_game/game_screen.dart';
 import 'level_selection/level_selection_screen.dart';
 import 'level_selection/levels.dart';
+import 'lobby_page/lobby_page.dart';
 import 'main_menu/main_menu_screen.dart';
-import 'queue_page/queue_page.dart';
 import 'settings/settings_screen.dart';
 import 'style/page_transition.dart';
 import 'style/palette.dart';
@@ -47,11 +47,11 @@ final pGoRouter = Provider<GoRouter>((ref) {
             ],
           ),
           GoRoute(
-            path: 'queue',
+            path: 'lobby',
             pageBuilder: (context, state) => buildPageTransition<void>(
-              key: const ValueKey('queue'),
+              key: const ValueKey('lobby'),
               color: ref.watch(pPalette).backgroundLevelSelection.color,
-              child: const QueuePage(),
+              child: const LobbyPage(),
             ),
           ),
           GoRoute(

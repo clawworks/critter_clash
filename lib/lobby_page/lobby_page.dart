@@ -5,8 +5,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../style/palette.dart';
 import '../../style/wobbly_button.dart';
 
-class QueuePage extends ConsumerWidget {
-  const QueuePage({super.key});
+class LobbyPage extends ConsumerWidget {
+  const LobbyPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -26,7 +26,7 @@ class QueuePage extends ConsumerWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Queue',
+                    'Lobby',
                     style: Theme.of(context).textTheme.headlineSmall,
                   ),
                   const SizedBox(width: 16),

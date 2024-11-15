@@ -54,9 +54,9 @@ class MainMenuScreen extends ConsumerWidget {
             WobblyButton(
               onPressed: () {
                 audioController.playSfx(SfxType.buttonTap);
-                GoRouter.of(context).go('/queue');
+                GoRouter.of(context).go('/lobby');
               },
-              child: const Text('Join Queue'),
+              child: const Text('Enter Lobby'),
             ),
             _gap,
             WobblyButton(
