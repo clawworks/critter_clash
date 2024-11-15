@@ -21,7 +21,7 @@ class GameScreen extends ConsumerWidget {
   final GameLevel level;
 
   static const String winDialogKey = 'win_dialog';
-  static const String backButtonKey = 'back_buttton';
+  static const String backButtonKey = 'back_button';
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

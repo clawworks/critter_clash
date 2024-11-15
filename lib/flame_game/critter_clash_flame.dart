@@ -2,7 +2,9 @@ import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flame/image_composition.dart' as flame_image;
+import 'package:flame/input.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../audio/audio_controller.dart';
 import '../player_progress/player_progress.dart';
@@ -24,7 +26,7 @@ import 'critter_world.dart';
 /// Note that both of the last are passed in to the super constructor, they
 /// could also be set inside of `onLoad` for example.
 class CritterClashFlame extends FlameGame
-    with PanDetector, HasCollisionDetection {
+    with PanDetector, HasCollisionDetection, KeyboardEvents {
   CritterClashFlame({
     // required this.level,
     required PlayerProgress playerProgress,
@@ -32,10 +34,10 @@ class CritterClashFlame extends FlameGame
     required this.onGameOver,
     required this.onGameStateUpdate,
   }) : super(
-        // world: CritterWorld(),
-        // camera:
-        // CameraComponent.withFixedResolution(width: 1920, height: 1080),
-        // camera: CameraComponent.withFixedResolution(width: 1600, height: 720),
+          world: CritterWorld(),
+          // camera:
+          // CameraComponent.withFixedResolution(width: 1920, height: 1080),
+          // camera: CameraComponent.withFixedResolution(width: 1600, height: 720),
         );
 
   static const int _initialHealthPoints = 100;
@@ -66,6 +68,11 @@ class CritterClashFlame extends FlameGame
 
   /// A helper for playing sound effects and background audio.
   final AudioController audioController;
+
+  bool _moveUp = false;
+  bool _moveDown = false;
+  bool _moveLeft = false;
+  bool _moveRight = false;
 
   // @override
   // Color backgroundColor() {
@@ -141,24 +148,78 @@ class CritterClashFlame extends FlameGame
     super.onPanUpdate(info);
   }
 
-  // @override
-  // void update(double dt) {
-  //   super.update(dt);
-  //   if (isGameOver) {
-  //     return;
-  //   }
-  //   for (final child in children) {
-  //     if (child is Projectile && child.hasBeenHit && !child.isMine) {
-  //       _playerHealthPoint = _playerHealthPoint - child.damage;
-  //       // final mirroredPosition = _player.getMirroredPercentPosition();
-  //       onGameStateUpdate(_player.position, _playerHealthPoint);
-  //       // _player.updateHealth(_playerHealthPoint / _initialHealthPoints);
-  //     }
-  //   }
-  //   if (_playerHealthPoint <= 0) {
-  //     endGame(false); // TODO ends game for just two players...
-  //   }
-  // }
+  @override
+  KeyEventResult onKeyEvent(
+    KeyEvent event,
+    Set<LogicalKeyboardKey> keysPressed,
+  ) {
+    final isKeyDown = event is KeyDownEvent;
+    final isKeyUp = event is KeyUpEvent;
+    print('Keys pressed: $keysPressed');
+    if (isKeyDown) {
+      if (keysPressed.contains(LogicalKeyboardKey.arrowUp)) {
+        _moveUp = isKeyDown;
+      }
+      if (keysPressed.contains(LogicalKeyboardKey.arrowDown)) {
+        _moveDown = isKeyDown;
+      }
+      if (keysPressed.contains(LogicalKeyboardKey.arrowLeft)) {
+        _moveLeft = isKeyDown;
+      }
+      if (keysPressed.contains(LogicalKeyboardKey.arrowRight)) {
+        _moveRight = isKeyDown;
+      }
+      return KeyEventResult.handled;
+    }
+    if (isKeyUp) {
+      if (keysPressed.contains(LogicalKeyboardKey.arrowUp)) {
+        _moveUp = false;
+      }
+      if (keysPressed.contains(LogicalKeyboardKey.arrowDown)) {
+        _moveDown = false;
+      }
+      if (keysPressed.contains(LogicalKeyboardKey.arrowLeft)) {
+        _moveLeft = false;
+      }
+      if (keysPressed.contains(LogicalKeyboardKey.arrowRight)) {
+        _moveRight = false;
+      }
+      return KeyEventResult.handled;
+    }
+    return KeyEventResult.ignored;
+  }
+
+  @override
+  void update(double dt) {
+    super.update(dt);
+    if (isGameOver) {
+      return;
+    }
+    for (final child in children) {
+      if (child is Projectile && child.hasBeenHit && !child.isMine) {
+        _playerHealthPoint = _playerHealthPoint - child.damage;
+        // final mirroredPosition = _player.getMirroredPercentPosition();
+        onGameStateUpdate(_player.position, _playerHealthPoint);
+        // _player.updateHealth(_playerHealthPoint / _initialHealthPoints);
+      }
+    }
+    if (_playerHealthPoint <= 0) {
+      endGame(false); // TODO ends game for just two players...
+    }
+
+    if (_moveUp) {
+      _player.move(Vector2(0, 40 * dt));
+    }
+    if (_moveDown) {
+      _player.move(Vector2(0, -40 * dt));
+    }
+    if (_moveLeft) {
+      _player.move(Vector2(40 * dt, 0));
+    }
+    if (_moveRight) {
+      _player.move(Vector2(-40 * dt, 0));
+    }
+  }
 
   void startNewGame() {
     isGameOver = false;
