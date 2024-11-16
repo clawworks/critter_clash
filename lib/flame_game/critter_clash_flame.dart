@@ -174,7 +174,6 @@ class CritterClashFlame extends FlameGame
   ) {
     final isKeyDown = event is KeyDownEvent;
     final isKeyUp = event is KeyUpEvent;
-    print('Keys pressed: $keysPressed');
 
     // Arrow up key
     if (event.logicalKey == LogicalKeyboardKey.arrowUp ||
@@ -244,18 +243,16 @@ class CritterClashFlame extends FlameGame
       endGame(false); // TODO ends game for just two players...
     }
 
-    print('On Game Update...');
-
-    if (_moveUp) {
+    if (_moveUp && _player.position.y > Player.radius) {
       _player.move(Vector2(0, -100 * dt));
     }
-    if (_moveDown) {
+    if (_moveDown && _player.position.y < size.y - Player.radius) {
       _player.move(Vector2(0, 100 * dt));
     }
-    if (_moveLeft) {
+    if (_moveLeft && _player.position.x > Player.radius) {
       _player.move(Vector2(-100 * dt, 0));
     }
-    if (_moveRight) {
+    if (_moveRight && _player.position.x < size.x - Player.radius) {
       _player.move(Vector2(100 * dt, 0));
     }
   }
